@@ -1,12 +1,12 @@
 ---
 title: "Welcome To My Blog"
-author: "Tristan O'Malley"
+author: "CongyuanHe"
 date: "2025-02-15"
-categories: [news]
+categories: [intro]
 ---
 
 This is the first post in a Quarto blog. Welcome!
 
-![](thumbnail.jpg)
+![](welcome.png)
 
-Since this post doesn't specify an explicit `image`, the first image in the post will be used in the listing page of posts.
+记录自己的读博生涯，包括但不限于 吐槽 代码 有趣的技术！欢迎！

@@ -1,12 +1,12 @@
 ---
-title: "Post With Code"
-author: "Harlow Malloc"
+title: "read any data"
+author: "LogitLegendary"
 date: "2025-02-18"
-categories: [news, code, analysis]
-image: "image.jpg"
+categories: [code]
+image: "readanydata.jpg"
 ---
 
-This is a post with executable code.
+## 在R语言中读取各种格式的数据 
 
 ```{r}
 1 + 1
