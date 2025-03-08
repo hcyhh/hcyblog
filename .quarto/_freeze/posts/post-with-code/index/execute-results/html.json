@@ -1,8 +1,8 @@
 {
-  "hash": "4ec7a56cee0147ae6663e98934626d7c",
+  "hash": "9482b9b4f165941f65bbeae140170088",
   "result": {
     "engine": "knitr",
-    "markdown": "---\ntitle: \"read any data\"\nauthor: \"LogitLegendary\"\ndate: \"2025-02-18\"\ncategories: [code]\nimage: \"readanydata.jpg\"\n---\n\n\n\nThis is a post with executable code.\n\n\n\n::: {.cell}\n\n```{.r .cell-code}\n1 + 1\n```\n\n::: {.cell-output .cell-output-stdout}\n\n```\n[1] 2\n```\n\n\n:::\n:::\n",
+    "markdown": "---\ntitle: \"read any data\"\nauthor: \"LogitLegendary\"\ndate: \"2025-02-18\"\ncategories: [code]\nimage: \"readanydata.png\"\n---\n\n\n\n![](readanydata.png)\n\n## 在R语言中读取各种格式的数据\n\n\n\n::: {.cell}\n\n```{.r .cell-code}\n1 + 1\n```\n\n::: {.cell-output .cell-output-stdout}\n\n```\n[1] 2\n```\n\n\n:::\n:::\n",
     "supporting": [],
     "filters": [
       "rmarkdown/pagebreak.lua"

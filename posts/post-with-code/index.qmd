@@ -2,11 +2,12 @@
 title: "read any data"
 author: "LogitLegendary"
 date: "2025-02-18"
-categories: [code]
-image: "readanydata.jpg"
+categories: [code] 
 ---
 
-## 在R语言中读取各种格式的数据 
+![](readanydata.png)
+
+## 在R语言中读取各种格式的数据
 
 ```{r}
 1 + 1

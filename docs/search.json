@@ -11,7 +11,7 @@
     "href": "posts/post-with-code/index.html",
     "title": "read any data",
     "section": "",
-    "text": "This is a post with executable code.\n\n1 + 1\n\n[1] 2"
+    "text": "1 + 1\n\n[1] 2"
   },
   {
     "objectID": "about.html",
@@ -54,5 +54,12 @@
     "title": "Congyuan He",
     "section": "",
     "text": "学术牛马\n在线搬砖"
+  },
+  {
+    "objectID": "posts/post-with-code/index.html#在r语言中读取各种格式的数据",
+    "href": "posts/post-with-code/index.html#在r语言中读取各种格式的数据",
+    "title": "read any data",
+    "section": "在R语言中读取各种格式的数据",
+    "text": "在R语言中读取各种格式的数据\n\n1 + 1\n\n[1] 2"
   }
 ]
