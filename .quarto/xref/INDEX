@@ -10,5 +10,8 @@
   },
   "posts/welcome/index.qmd": {
     "index.html": "3b6aa88d"
+  },
+  "posts/R语言中常见技巧和bug/index.qmd": {
+    "index.html": "81039f3e"
   }
 }

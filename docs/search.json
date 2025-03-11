@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "LogitLegendary",
     "section": "",
-    "text": "Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n         \n          Author\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n\n\n\n\nread any data\n\n\n\ncode\n\n\n\n\n\n\n\nLogitLegendary\n\n\nFeb 18, 2025\n\n\n\n\n\n\n\n\n\n\n\n\nWelcome To My Blog\n\n\n\nintro\n\n\n\n\n\n\n\nCongyuanHe\n\n\nFeb 15, 2025\n\n\n\n\n\n\n\n\nNo matching items"
+    "text": "Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n         \n          Author\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n\n\n\n\nR 语言中常见bug 及解决方案\n\n\n\ncode\n\n\n\n\n\n\n\nLogitLegendary\n\n\nMar 10, 2025\n\n\n\n\n\n\n\n\n\n\n\n\nread any data\n\n\n\ncode\n\n\n\n\n\n\n\nLogitLegendary\n\n\nFeb 18, 2025\n\n\n\n\n\n\n\n\n\n\n\n\nWelcome To My Blog\n\n\n\nintro\n\n\n\n\n\n\n\nCongyuanHe\n\n\nFeb 15, 2025\n\n\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "posts/post-with-code/index.html",
@@ -61,5 +61,89 @@
     "title": "read any data",
     "section": "在R语言中读取各种格式的数据",
     "text": "在R语言中读取各种格式的数据\n适用于 SAS SPSS R Excel格式的数据\n\nread_any_file &lt;- function(file, sheet = NULL, encoding = \"UTF-8\") {\n  # 获取文件扩展名，忽略大小写\n  ext &lt;- tolower(tools::file_ext(file))\n  \n  if (ext %in% c(\"csv\")) {\n    # CSV 文件：使用 data.table::fread 并指定编码\n    dt &lt;- data.table::fread(file, encoding = encoding)\n    \n  } else if (ext %in% c(\"xlsx\", \"xls\")) {\n    # Excel 文件：使用 readxl::read_excel，支持选择 sheet\n    if (!requireNamespace(\"readxl\", quietly = TRUE)) {\n      stop(\"请先安装 readxl 包：install.packages('readxl')\")\n    }\n    dt &lt;- readxl::read_excel(file, sheet = sheet)\n    dt &lt;- data.table::as.data.table(dt)\n    \n  } else if (ext == \"sav\") {\n    # SPSS 文件：.sav\n    if (!requireNamespace(\"haven\", quietly = TRUE)) {\n      stop(\"请先安装 haven 包：install.packages('haven')\")\n    }\n    dt &lt;- haven::read_sav(file)\n    dt &lt;- data.table::as.data.table(dt)\n    \n  } else if (ext == \"dta\") {\n    # Stata 文件：.dta\n    if (!requireNamespace(\"haven\", quietly = TRUE)) {\n      stop(\"请先安装 haven 包：install.packages('haven')\")\n    }\n    dt &lt;- haven::read_dta(file)\n    dt &lt;- data.table::as.data.table(dt)\n    \n  } else if (ext == \"sas7bdat\") {\n    # SAS 文件：.sas7bdat\n    if (!requireNamespace(\"haven\", quietly = TRUE)) {\n      stop(\"请先安装 haven 包：install.packages('haven')\")\n    }\n    dt &lt;- haven::read_sas(file)\n    dt &lt;- data.table::as.data.table(dt)\n    \n  } else if (ext == \"rdata\") {\n    # RData 文件：直接 load 文件，假定文件中有一个名为 dt 的对象\n    dt &lt;- load(file) |&gt; data.table::as.data.table()\n    \n  } else {\n    stop(\"不支持的文件格式\")\n  }\n  \n  return(dt)\n}\n\n# dat &lt;- read_any_file (\"C:/Users/hcy29/Desktop/read_data/SPSS.sav\")\n\n\n运行函数以后，只需要修改路径即可 读取数据进R\n也可以自己拆开函数 根据对应的数据格式 进行读取"
+  },
+  {
+    "objectID": "posts/R语言中常见技巧和bug/index.html#循环画图所有图一样",
+    "href": "posts/R语言中常见技巧和bug/index.html#循环画图所有图一样",
+    "title": "R 语言中常见bug 及解决方案",
+    "section": "1 循环画图所有图一样",
+    "text": "1 循环画图所有图一样\n\nplot_list &lt;- list()\ncolors &lt;- c(rep(c(\"#990000\",\"black\",\"black\",\"black\"),4))\nfor (k in 1:dim(MC2)[2]) {\n  plot_list[[k]] &lt;- ggplot(data = MC2) +\n    geom_line(aes(x = c(1:dim(MC2)[1]), y = !!sym(names(MC2)[k])),\n              color =colors[k]) +\n    theme_bw(base_family = \"Times\")+\n    xlab(\"\")+ylab(\"\")+\n    ggtitle(paste0(names(MC2)[k]))+\n    theme(plot.title = element_text(hjust = 0.5),  # Center the title\n          plot.margin = margin(t = 20)) \n}\ngrid_plot &lt;-do.call(grid.arrange, c(plot_list, ncol=4, nrow=4))\n\n注意：这里的y如果写成\n\ny=MC2[,k]\n\n就会发生这个问题！"
+  },
+  {
+    "objectID": "posts/R语言中常见技巧和bug/index.html#ggplot作图不显示中文",
+    "href": "posts/R语言中常见技巧和bug/index.html#ggplot作图不显示中文",
+    "title": "R 语言中常见bug 及解决方案",
+    "section": "2 ggplot作图不显示中文",
+    "text": "2 ggplot作图不显示中文\n\ntheme_bw(base_family = \"STKaiti\")\n\n或者\n\nlibrary(showtext)；showtext_auto()\n\n在主题里设置字体，具体可用字体可搜索"
+  },
+  {
+    "objectID": "posts/R语言中常见技巧和bug/index.html#四舍五入保留两位小数末尾为0也显示",
+    "href": "posts/R语言中常见技巧和bug/index.html#四舍五入保留两位小数末尾为0也显示",
+    "title": "R 语言中常见bug 及解决方案",
+    "section": "3 四舍五入保留两位小数，末尾为0也显示",
+    "text": "3 四舍五入保留两位小数，末尾为0也显示\n\nsprintf(\"%.2f\",round(Estimate, 2))\n\nEstimate换成具体数值"
+  },
+  {
+    "objectID": "posts/R语言中常见技巧和bug/index.html#数据探索",
+    "href": "posts/R语言中常见技巧和bug/index.html#数据探索",
+    "title": "R 语言中常见bug 及解决方案",
+    "section": "4 数据探索",
+    "text": "4 数据探索\n\nsummmary() #所有变量进行描述\npairs() #所有变量两两散点图"
+  },
+  {
+    "objectID": "posts/R语言中常见技巧和bug/index.html#多重线性回归教程",
+    "href": "posts/R语言中常见技巧和bug/index.html#多重线性回归教程",
+    "title": "R 语言中常见bug 及解决方案",
+    "section": "5 多重线性回归教程",
+    "text": "5 多重线性回归教程\n多重线性回归教程"
+  },
+  {
+    "objectID": "posts/R语言中常见技巧和bug/index.html#查看描述性分析的一个简单写法",
+    "href": "posts/R语言中常见技巧和bug/index.html#查看描述性分析的一个简单写法",
+    "title": "R 语言中常见bug 及解决方案",
+    "section": "6 查看描述性分析的一个简单写法",
+    "text": "6 查看描述性分析的一个简单写法\n\nftable(xtabs(~var3+var1+var2,data = dat)) var1 代表行 var2代表列 var3分层"
+  },
+  {
+    "objectID": "posts/R语言中常见技巧和bug/index.html#误差棒",
+    "href": "posts/R语言中常见技巧和bug/index.html#误差棒",
+    "title": "R 语言中常见bug 及解决方案",
+    "section": "7 误差棒",
+    "text": "7 误差棒\n误差棒\n\ndat&lt;- read_excel('dat.xlsx') %&gt;% \n  mutate(BMI = 体重/(身高*0.01)^2,\n         组别 = ifelse(组别==0,'实验组','对照组')) %&gt;% \n  dplyr::select(c(1,29:34))\n\ndf &lt;- dat[,c(1,6:7)]\n\n\ndf &lt;- pivot_longer(df, cols = c(2:3), names_to = \"condition\", values_to = \"value\") \ndf$condition &lt;- factor(df$condition)\ndf$组别 &lt;- factor(df$组别)\ndata_summary &lt;- function(data, varname, groupnames){\n  require(plyr)\n  summary_func &lt;- function(x, col){\n    c(mean = mean(x[[col]], na.rm=TRUE),\n      sd = sd(x[[col]], na.rm=TRUE))\n  }\n  data_sum&lt;-ddply(data, groupnames, .fun=summary_func,\n                  varname)\n  #data_sum &lt;- rename(data_sum, c(\"mean\" = varname))\n  return(data_sum)\n}\ndf2 &lt;- data_summary(df, varname=\"value\", \n                    groupnames=c(\"组别\", \"condition\"))\nnames(df2)[c(2,3)] &lt;-  c('阶段',\"value\")\ndf2$阶段 &lt;- ifelse(df2$阶段=='抑郁','治疗前','治疗后')\n\nggplot(df2, aes(x=组别, y=value, fill=阶段)) + \n  geom_bar(stat=\"identity\", color=\"black\", \n           position=position_dodge()) +\n  geom_errorbar(aes(ymin=value-sd, ymax=value+sd), width=.2,\n                position=position_dodge(.9)) +\n  theme_minimal(base_family = \"Times\") +  \n  theme(panel.grid = element_blank(),\n        panel.border = element_blank(),\n        panel.background = element_rect(fill = NA),  \n        plot.background = element_rect(fill = NA,colour = NA),\n        plot.title = element_text(hjust = 0.5),\n        axis.text.y = element_text(face = \"bold\")) +  \n  labs(x = NULL, y = '均值',title = \"两组抑郁评分变化\")+\n  scale_fill_manual(values=c('#999999','#CCCCCC'))"
+  },
+  {
+    "objectID": "posts/R语言中常见技巧和bug/index.html#长数据转化",
+    "href": "posts/R语言中常见技巧和bug/index.html#长数据转化",
+    "title": "R 语言中常见bug 及解决方案",
+    "section": "8 长数据转化",
+    "text": "8 长数据转化\n\nlibrary(tidyr)\n\n# 创建一个宽格式数据框\nwide_data &lt;- data.frame(\n  id = 1:3,\n  var1_1 = c(1, 2, 3),\n  var1_2 = c(4, 5, 6),\n  var2_1 = c(7, 8, 9),\n  var2_2 = c(10, 11, 12)\n)\n\n# 使用pivot_longer函数将数据转换为长格式\nlong_data &lt;- pivot_longer(wide_data, cols = starts_with(\"var\"), \n                          names_to = \"variable\", values_to = \"value\")\n\n# 查看转换后的长格式数据\nprint(long_data)"
+  },
+  {
+    "objectID": "posts/R语言中常见技巧和bug/index.html#r代码加密",
+    "href": "posts/R语言中常见技巧和bug/index.html#r代码加密",
+    "title": "R 语言中常见bug 及解决方案",
+    "section": "9 R代码加密",
+    "text": "9 R代码加密\n![[代码加密测试.zip]]\n可参考： &lt;(3 封私信 / 44 条消息) R语言用怎么实现，可以让别人用一个函数，但是不能看底码？ - 知乎&gt;\n&lt;source code protection - Encrypting R script under MS-Windows - Stack Overflow&gt;"
+  },
+  {
+    "objectID": "posts/R语言中常见技巧和bug/index.html#ggplot-拼图技巧",
+    "href": "posts/R语言中常见技巧和bug/index.html#ggplot-拼图技巧",
+    "title": "R 语言中常见bug 及解决方案",
+    "section": "10 ggplot 拼图技巧",
+    "text": "10 ggplot 拼图技巧\n\nlibrary(patchwork) \n(p1 + p2 + p3 + p4) + \n  plot_annotation(\n    tag_levels = 'A'  # 设置标签为A, B, C, D\n  )"
+  },
+  {
+    "objectID": "posts/R语言中常见技巧和bug/index.html#quarto编译beamer中文不显示",
+    "href": "posts/R语言中常见技巧和bug/index.html#quarto编译beamer中文不显示",
+    "title": "R 语言中常见bug 及解决方案",
+    "section": "11 quarto编译beamer中文不显示",
+    "text": "11 quarto编译beamer中文不显示\n\ntitle: 贝叶斯ppt\nauthor: 何从源\ndate: now\ndate-modified: now\nformat: beamer\noutput:\n  beamer_presentation:\n    latex_engine: xelatex  \nmainfont: \"Times New Roman\"  \nCJKmainfont: \"SimSun\"  \nfontsize: 10pt"
+  },
+  {
+    "objectID": "posts/R语言中常见技巧和bug/index.html#github上下载r包本地安装",
+    "href": "posts/R语言中常见技巧和bug/index.html#github上下载r包本地安装",
+    "title": "R 语言中常见bug 及解决方案",
+    "section": "12 GitHub上下载R包本地安装",
+    "text": "12 GitHub上下载R包本地安装\n\n&gt; library(devtools)\n载入需要的程序包：usethis\n&gt; devtools::install_local(\"D:/Download/sl3-master.zip\")"
   }
 ]
