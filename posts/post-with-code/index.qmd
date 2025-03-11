@@ -9,6 +9,64 @@ categories: [code]
 
 ## 在R语言中读取各种格式的数据
 
+适用于 SAS SPSS R Excel格式的数据
+
 ```{r}
-1 + 1
+read_any_file <- function(file, sheet = NULL, encoding = "UTF-8") {
+  # 获取文件扩展名，忽略大小写
+  ext <- tolower(tools::file_ext(file))
+  
+  if (ext %in% c("csv")) {
+    # CSV 文件：使用 data.table::fread 并指定编码
+    dt <- data.table::fread(file, encoding = encoding)
+    
+  } else if (ext %in% c("xlsx", "xls")) {
+    # Excel 文件：使用 readxl::read_excel，支持选择 sheet
+    if (!requireNamespace("readxl", quietly = TRUE)) {
+      stop("请先安装 readxl 包：install.packages('readxl')")
+    }
+    dt <- readxl::read_excel(file, sheet = sheet)
+    dt <- data.table::as.data.table(dt)
+    
+  } else if (ext == "sav") {
+    # SPSS 文件：.sav
+    if (!requireNamespace("haven", quietly = TRUE)) {
+      stop("请先安装 haven 包：install.packages('haven')")
+    }
+    dt <- haven::read_sav(file)
+    dt <- data.table::as.data.table(dt)
+    
+  } else if (ext == "dta") {
+    # Stata 文件：.dta
+    if (!requireNamespace("haven", quietly = TRUE)) {
+      stop("请先安装 haven 包：install.packages('haven')")
+    }
+    dt <- haven::read_dta(file)
+    dt <- data.table::as.data.table(dt)
+    
+  } else if (ext == "sas7bdat") {
+    # SAS 文件：.sas7bdat
+    if (!requireNamespace("haven", quietly = TRUE)) {
+      stop("请先安装 haven 包：install.packages('haven')")
+    }
+    dt <- haven::read_sas(file)
+    dt <- data.table::as.data.table(dt)
+    
+  } else if (ext == "rdata") {
+    # RData 文件：直接 load 文件，假定文件中有一个名为 dt 的对象
+    dt <- load(file) |> data.table::as.data.table()
+    
+  } else {
+    stop("不支持的文件格式")
+  }
+  
+  return(dt)
+}
+
+# dat <- read_any_file ("C:/Users/hcy29/Desktop/read_data/SPSS.sav")
+
 ```
+
+- 运行函数以后，只需要修改路径即可 读取数据进R
+
+- 也可以自己拆开函数 根据对应的数据格式 进行读取

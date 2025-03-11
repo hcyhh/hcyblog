@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "LogitLegendary",
     "section": "",
-    "text": "Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n         \n          Author\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n\n\n\n\n\n\nread any data\n\n\n\ncode\n\n\n\n\n\n\n\nLogitLegendary\n\n\nFeb 18, 2025\n\n\n\n\n\n\n\n\n\n\n\n\nWelcome To My Blog\n\n\n\nintro\n\n\n\n\n\n\n\nCongyuanHe\n\n\nFeb 15, 2025\n\n\n\n\n\n\n\n\nNo matching items"
+    "text": "Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n         \n          Author\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n\n\n\n\nread any data\n\n\n\ncode\n\n\n\n\n\n\n\nLogitLegendary\n\n\nFeb 18, 2025\n\n\n\n\n\n\n\n\n\n\n\n\nWelcome To My Blog\n\n\n\nintro\n\n\n\n\n\n\n\nCongyuanHe\n\n\nFeb 15, 2025\n\n\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "posts/post-with-code/index.html",
@@ -60,6 +60,6 @@
     "href": "posts/post-with-code/index.html#在r语言中读取各种格式的数据",
     "title": "read any data",
     "section": "在R语言中读取各种格式的数据",
-    "text": "在R语言中读取各种格式的数据\n\n1 + 1\n\n[1] 2"
+    "text": "在R语言中读取各种格式的数据\n适用于 SAS SPSS R Excel格式的数据\n\nread_any_file &lt;- function(file, sheet = NULL, encoding = \"UTF-8\") {\n  # 获取文件扩展名，忽略大小写\n  ext &lt;- tolower(tools::file_ext(file))\n  \n  if (ext %in% c(\"csv\")) {\n    # CSV 文件：使用 data.table::fread 并指定编码\n    dt &lt;- data.table::fread(file, encoding = encoding)\n    \n  } else if (ext %in% c(\"xlsx\", \"xls\")) {\n    # Excel 文件：使用 readxl::read_excel，支持选择 sheet\n    if (!requireNamespace(\"readxl\", quietly = TRUE)) {\n      stop(\"请先安装 readxl 包：install.packages('readxl')\")\n    }\n    dt &lt;- readxl::read_excel(file, sheet = sheet)\n    dt &lt;- data.table::as.data.table(dt)\n    \n  } else if (ext == \"sav\") {\n    # SPSS 文件：.sav\n    if (!requireNamespace(\"haven\", quietly = TRUE)) {\n      stop(\"请先安装 haven 包：install.packages('haven')\")\n    }\n    dt &lt;- haven::read_sav(file)\n    dt &lt;- data.table::as.data.table(dt)\n    \n  } else if (ext == \"dta\") {\n    # Stata 文件：.dta\n    if (!requireNamespace(\"haven\", quietly = TRUE)) {\n      stop(\"请先安装 haven 包：install.packages('haven')\")\n    }\n    dt &lt;- haven::read_dta(file)\n    dt &lt;- data.table::as.data.table(dt)\n    \n  } else if (ext == \"sas7bdat\") {\n    # SAS 文件：.sas7bdat\n    if (!requireNamespace(\"haven\", quietly = TRUE)) {\n      stop(\"请先安装 haven 包：install.packages('haven')\")\n    }\n    dt &lt;- haven::read_sas(file)\n    dt &lt;- data.table::as.data.table(dt)\n    \n  } else if (ext == \"rdata\") {\n    # RData 文件：直接 load 文件，假定文件中有一个名为 dt 的对象\n    dt &lt;- load(file) |&gt; data.table::as.data.table()\n    \n  } else {\n    stop(\"不支持的文件格式\")\n  }\n  \n  return(dt)\n}\n\n# dat &lt;- read_any_file (\"C:/Users/hcy29/Desktop/read_data/SPSS.sav\")\n\n\n运行函数以后，只需要修改路径即可 读取数据进R\n也可以自己拆开函数 根据对应的数据格式 进行读取"
   }
 ]
