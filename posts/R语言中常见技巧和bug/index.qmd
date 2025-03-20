@@ -2,7 +2,7 @@
 title: "R 语言中常见bug 及解决方案"
 author: "LogitLegendary"
 date: "2025-03-10"
-categories: [code] 
+categories: [code]  
 execute:
   eval: false
 ---

@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/多重插补学习/index.html",
       "/posts/R语言中常见技巧和bug/index.html",
       "/posts/post-with-code/index.html",
       "/posts/welcome/index.html"
